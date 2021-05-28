@@ -1,0 +1,21 @@
+DROP DATABASE dbase;
+
+CREATE DATABASE dbase;
+USE dbase;
+
+CREATE TABLE usr(
+id VARCHAR(20)  NOT NULL,
+name VARCHAR(20) NOT NULL,
+password VARCHAR(20) NOT NULL,
+age INT NOT NULL,
+sex VARCHAR(20) NOT NULL,
+phone VARCHAR(20) NOT NULL,
+address VARCHAR(20) NOT NULL
+);
+
+
+INSERT INTO usr (id, name, password, age, sex, phone, address)
+VALUES  ("1101","Louis","a1101",20,"M","19119119111","Sichuan"),
+        ("1102","SANS","a1102",20,"M","12341234123","SKJA"),
+        ("1103","sdlja","a1103",20,"F","382478472","djfsd"),
+        ("1104","kdfgjksl","a1104",19,"M","343827823","Sichuan");
