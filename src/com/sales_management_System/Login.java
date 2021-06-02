@@ -24,8 +24,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Login extends JFrame implements ActionListener {
-    private JTextField nameField;
-    private JPasswordField passwordField;
+    protected JTextField nameField;
+    protected JPasswordField passwordField;
     private JButton loginButton, registButton;
 
     public Login() {
@@ -71,13 +71,12 @@ public class Login extends JFrame implements ActionListener {
 
     public void loginButton_actionPerformed() {
         String userName = nameField.getText().trim();
-        String userId = nameField.getText().trim();
         String passWord = new String(passwordField.getPassword()).trim();
+
         Connection con;
         Statement sta;
-        ResultSet rs_id, rs_name;
+        ResultSet rs;
         boolean flag = false;
-
 
         if (userName.equals("") || passWord.equals("")) {
             JOptionPane.showMessageDialog(this, "请完善登录信息", "warning", JOptionPane.WARNING_MESSAGE);
@@ -89,24 +88,17 @@ public class Login extends JFrame implements ActionListener {
                     con.close();
                 } else {
 
-                    String sqlName = "SELECT * FROM dbase.usr WHERE name='" + userName + "' AND password='" + passWord + "' ";
-                    String sqlId = "SELECT * FROM dbase.usr WHERE id='" + userId + "' AND password='" + passWord + "'";
+                    String sql = "SELECT * FROM dbase.usr WHERE name='" + userName + "' AND password='" + passWord + "' ";
                     sta = con.createStatement();
-                    rs_name = sta.executeQuery(sqlName);
-                    rs_id = sta.executeQuery(sqlId);
-                    String u_name, u_id_password, u_id, u_name_password;
-                    while (rs_id.next() || rs_name.next()) {
-                        u_name = rs_name.getString("name");
-                        u_id = rs_id.getString("id");
-                        u_id_password = rs_id.getString("password");
-                        u_name_password = rs_name.getString("password");
-                        if ((u_name.equals(userName) || u_id.equals(userId)) && (u_id_password.equals(passWord) || u_name_password.equals(passWord)))
-                        {
+                    rs = sta.executeQuery(sql);
+                    String u_name, u_password;
+                    while (rs.next()) {
+                        u_name = rs.getString("name");
+                        u_password = rs.getString("password");
+                        if (u_name.equals(userName) && u_password.equals(passWord)) {
                             flag = true;
                         }
-
                     }
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();
