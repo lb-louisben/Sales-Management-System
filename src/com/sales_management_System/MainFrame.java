@@ -25,7 +25,7 @@ public class MainFrame extends JFrame implements ActionListener {
     Menu menux2 = new Menu("库存管理");
     Menu menux3 = new Menu("进货管理");
     Menu menux4 = new Menu("销售管理");
-    Menu menux5 = new Menu("系统退出");
+    Menu menux5 = new Menu("帮助");
 
     //用户管理
     MenuItem menuitemx101 = new MenuItem("删除用户");
