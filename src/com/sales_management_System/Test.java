@@ -61,7 +61,7 @@ public class Test extends JFrame implements ActionListener {
     }
 
     public static void main(String args[]) {
-        Icon picture1 = new ImageIcon("b1.JPG");
+        Icon picture1 = new ImageIcon("pic.jpg");
         JLabel logo = new JLabel();
         logo.setIcon(picture1);
         JFrame f = new Test();

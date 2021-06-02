@@ -24,7 +24,7 @@ public class Replenishment extends JFrame implements ActionListener {
 
     public Replenishment() {
         super();
-        this.setSize(700, 700);
+        this.setSize(300, 700);
         this.setTitle("补货");
         this.setLocation(700, 250);
         this.setVisible(true);
@@ -34,7 +34,7 @@ public class Replenishment extends JFrame implements ActionListener {
 
     private void init() {
         idLabel = new JLabel("编号:");
-        nameLabel = new JLabel("无人机类型:");
+        nameLabel = new JLabel("饮料类型:");
         libraryLabel = new JLabel("进货量:");
 
 
@@ -68,20 +68,20 @@ public class Replenishment extends JFrame implements ActionListener {
     public void indexButton_actionPerformed() {
         String Id = idField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/book";
+        String url = "jdbc:mysql://localhost:3306/dbase";
         Connection con = null;
         ResultSet rs = null;
         Statement smt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "123456");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
             //System.out.println(rs.getString("name"));
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "数据库连接错误", "warning", JOptionPane.WARNING_MESSAGE);
                 con.close();
             } else {
                 //System.out.println(rs.getString("phone"));
-                String sql = "select * from book where id= '" + Id + "' ";
+                String sql = "select * from dbase.book where id= '" + Id + "' ";
                 smt = con.createStatement();
                 rs = smt.executeQuery(sql);
                 while (rs.next()) {
@@ -103,7 +103,7 @@ public class Replenishment extends JFrame implements ActionListener {
         String name = nameField.getText().trim();
         String library = libraryField.getText().trim();
         int surplus = Integer.parseInt(library);
-        String url = "jdbc:mysql://localhost:3306/book";
+        String url = "jdbc:mysql://localhost:3306/dbase";
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -114,15 +114,15 @@ public class Replenishment extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "连接错误", "warning", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection(url, "root", "123456");
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection(url, "root", "Hwb..//0987");
                 if (con == null) {
                     JOptionPane.showMessageDialog(this, "库连接错误", "warning", JOptionPane.WARNING_MESSAGE);
                     con.close();
                 } else {
 
                     //String sql1="select library from book where id='"+Id+"'";
-                    String sql2 = "update book set  library = library + ? where id=?";
+                    String sql2 = "update dbase.book set  library = library + ? where id=?";
                     ps = con.prepareStatement(sql2);
 
                     //System.out.println(a);

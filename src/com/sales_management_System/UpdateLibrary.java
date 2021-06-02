@@ -14,6 +14,8 @@ package com.sales_management_System;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.sql.*;
 
@@ -29,20 +31,20 @@ public class UpdateLibrary extends JFrame implements ActionListener {
         this.setTitle("修改库存");
         this.setVisible(true);
         this.setResizable(true);
-		/*this.setDefaultCloseOperation(EXIT_ON_CLOSE);//关闭界面时退出JVM虚拟机
-		addWindowListener(new WindowAdapter(){       //点击关闭界面的叉号时跳出询问窗口
-			  public void windowClosing(WindowEvent e){
-				int n=JOptionPane.showConfirmDialog(null, "Are you sure closing this software?","warning",JOptionPane.YES_NO_OPTION);
-				if(n==JOptionPane.YES_OPTION)
-					System.exit(0);
-			  }
-		 });*/
+//		this.setDefaultCloseOperation(EXIT_ON_CLOSE);//关闭界面时退出JVM虚拟机
+//		addWindowListener(new WindowAdapter(){       //点击关闭界面的叉号时跳出询问窗口
+//			  public void windowClosing(WindowEvent e){
+//				int n=JOptionPane.showConfirmDialog(null, "Are you sure closing this software?","warning",JOptionPane.YES_NO_OPTION);
+//				if(n==JOptionPane.YES_OPTION)
+//					System.exit(0);
+//			  }
+//		 });
         init();
     }
 
     private void init() {
         idLabel = new JLabel("编号:");
-        nameLabel = new JLabel("无人机类型:");
+        nameLabel = new JLabel("饮料类型:");
         libraryLabel = new JLabel("库存:");
         priceLabel = new JLabel("售价:");
         saleLabel = new JLabel("销量:");
@@ -82,18 +84,18 @@ public class UpdateLibrary extends JFrame implements ActionListener {
     public void inquireButton_actionPerformed() {
         String Id = idField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/book";
+        String url = "jdbc:mysql://localhost:3306/dbase";
         Connection con = null;
         ResultSet rs = null;
         Statement smt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "123456");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
                 con.close();
             } else {
-                String sql = "select * from book where id='" + Id + "' ";
+                String sql = "select * from dbase.book where id='" + Id + "' ";
                 smt = con.createStatement();
                 rs = smt.executeQuery(sql);
                 while (rs.next()) {
@@ -104,6 +106,7 @@ public class UpdateLibrary extends JFrame implements ActionListener {
                     saleField.setText(rs.getString("sale"));
                 }
             }
+
             con.close();
             smt.close();
             rs.close();
@@ -124,19 +127,19 @@ public class UpdateLibrary extends JFrame implements ActionListener {
         String Sale = saleField.getText().trim();
         int sale = Integer.parseInt(Sale);
 
-        String url = "jdbc:mysql://localhost:3306/book";
+        String url = "jdbc:mysql://localhost:3306/dbase";
         Connection con = null;
         PreparedStatement ps = null;
         //ResultSet rs = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "123456");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
                 con.close();
             } else {
-                String sql = "update book set name= ? , library= ? , price= ? , sale= ? where id = ?";
+                String sql = "update dbase.book set name= ? , library= ? , price= ? , sale= ? where id = ?";
                 ps = con.prepareStatement(sql);
                 ps.setString(1, Name);
                 ps.setInt(2, library);

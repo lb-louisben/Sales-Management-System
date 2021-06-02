@@ -31,7 +31,8 @@ public class DeleteUserItemPanel extends JFrame implements ActionListener {
         this.setTitle("删除非法用户");
         this.setVisible(true);
         this.setResizable(true);
-		/*this.setDefaultCloseOperation(EXIT_ON_CLOSE);//关闭界面时退出JVM虚拟机
+		/*
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);//关闭界面时退出JVM虚拟机
 		addWindowListener(new WindowAdapter(){       //点击关闭界面的叉号时跳出询问窗口
 			  public void windowClosing(WindowEvent e){
 				int n=JOptionPane.showConfirmDialog(null, "Are you sure closing this software?","warning",JOptionPane.YES_NO_OPTION);
@@ -92,20 +93,20 @@ public class DeleteUserItemPanel extends JFrame implements ActionListener {
     public void indexButton_actionPerformed() {
         String userId = idField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/usr_01";
+        String url = "jdbc:mysql://localhost:3306/dbase";
         Connection con = null;
         ResultSet rs = null;
         Statement smt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "123456");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
             //System.out.println(rs.getString("name"));
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
                 con.close();
             } else {
                 //System.out.println(rs.getString("phone"));
-                String sql = "select * from usr where id='" + userId + "' ";
+                String sql = "select * from dbase.usr where id='" + userId + "' ";
                 smt = con.createStatement();
                 rs = smt.executeQuery(sql);
                 while (rs.next()) {
@@ -132,18 +133,18 @@ public class DeleteUserItemPanel extends JFrame implements ActionListener {
     public void delButton_actionPerformed() {
 
         String userId = idField.getText().trim();
-        String url = "jdbc:mysql://localhost:3306/usr_01";
+        String url = "jdbc:mysql://localhost:3306/dbase";
         Connection con = null;
         ResultSet rs = null;
         Statement smt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "123456");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
                 con.close();
             } else {
-                String sssql = "delete  from usr where id='" + userId + "' ";
+                String sssql = "delete  from dbase.usr where id='" + userId + "' ";
                 smt = con.createStatement();
                 int k = smt.executeUpdate(sssql);
             }

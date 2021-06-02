@@ -1,0 +1,12 @@
+use dbase;
+
+create table book(
+    id      varchar(20) not null,
+    name    varchar(20) not null,
+    library int not null,
+    price   DECIMAL not null,
+    sale    varchar(20) not null
+);
+
+insert into book(id, name, library, price, sale)
+values("1001","AD钙",1000,4,1000);

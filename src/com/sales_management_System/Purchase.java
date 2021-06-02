@@ -54,11 +54,11 @@ public class Purchase extends JFrame implements ActionListener{
 
     private void init(){
         idLabel=new JLabel("编号:");
-        nameLabel=new JLabel("无人机类型:");
+        nameLabel=new JLabel("饮料类型:");
         libraryLabel=new JLabel("进货量:");
         priceLabel=new JLabel("售价:");
         saleLabel=new JLabel("销量:");
-        newbookLabel=new JLabel("新机");
+        newbookLabel=new JLabel("新品");
 
         idField=new JTextField(24);
         nameField=new JTextField(24);
@@ -106,7 +106,7 @@ public class Purchase extends JFrame implements ActionListener{
         //int sale=Integer.parseInt(Sale);
         //String newbook=newbookField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/book";
+        String url = "jdbc:mysql://localhost:3306/dbase";
 
         Connection con=null;
         ResultSet rs = null;
@@ -117,14 +117,14 @@ public class Purchase extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(this, "请完善信息", "warning", JOptionPane.WARNING_MESSAGE);
         }else{
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection(url, "root", "123456");
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection(url, "root", "Hwb..//0987");
                 if(con == null){
                     JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
                     con.close();
                 }else{
 
-                    String sql="insert into book(id, name, library, price, sale) values(?, ?, ?, ?, ?)";
+                    String sql="insert into dbase.book(id, name, library, price, sale) values(?, ?, ?, ?, ?)";
                     ps =  con.prepareStatement(sql);
                     ps.setString(1, Id);
                     ps.setString(2, Name);
@@ -146,7 +146,7 @@ public class Purchase extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == submitButton){
             submitButton_actionPerformed();
-            JOptionPane.showMessageDialog(null, "无人机已录入库存");
+            JOptionPane.showMessageDialog(null, "饮料已录入库存");
         }else if(e.getSource() == resetButton){
             resetButton_actionPerformed();
         }

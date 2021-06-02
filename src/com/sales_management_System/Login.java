@@ -111,12 +111,12 @@ public class Login extends JFrame implements ActionListener {
                 if (flag == true) {
                     //System.out.println("查到数据了！");
                     this.setVisible(false);
-                    Icon picture1 = new ImageIcon("a3.JPG");
+                    Icon picture1 = new ImageIcon("src/pic.jpg");
                     JLabel logo = new JLabel();
                     logo.setIcon(picture1);
                     JFrame f = new MainFrame();
-                    f.setSize(700, 300);
-                    f.setTitle("“苍穹”无人机销售系统");
+                    f.setSize(730, 487);
+                    f.setTitle("'娃哈哈'饮料销售系统");
                     f.add(logo);
                     f.show();
                 } else {

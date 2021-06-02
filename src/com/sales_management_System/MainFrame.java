@@ -38,7 +38,7 @@ public class MainFrame extends JFrame implements ActionListener {
     MenuItem menuitemx202 = new MenuItem("修改库存");
 
     //进货管理
-    MenuItem menuitemx301 = new MenuItem("新机入库");
+    MenuItem menuitemx301 = new MenuItem("新饮品入库");
     MenuItem menuitemx302 = new MenuItem("补货");
 
     //销售管理
@@ -121,7 +121,7 @@ public class MainFrame extends JFrame implements ActionListener {
             InquireLibrary inquirelibrary = new InquireLibrary();
         } else if (e.getSource() == menuitemx202) {                //修改库存
             UpdateLibrary updatelibrary = new UpdateLibrary();
-        } else if (e.getSource() == menuitemx301) {                //新书入库
+        } else if (e.getSource() == menuitemx301) {                //饮料进货入库
             Purchase purchase = new Purchase();
         } else if (e.getSource() == menuitemx302) {                //补货
             Replenishment replenishment = new Replenishment();

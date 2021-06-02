@@ -44,7 +44,7 @@ public class InquireLibrary extends JFrame implements ActionListener {
 
     private void init() {
         idLabel = new JLabel("编号:");
-        nameLabel = new JLabel("无人机类型:");
+        nameLabel = new JLabel("饮料类型:");
         libraryLabel = new JLabel("库存:");
         priceLabel = new JLabel("售价:");
         saleLabel = new JLabel("销量:");
@@ -83,20 +83,20 @@ public class InquireLibrary extends JFrame implements ActionListener {
     public void indexButton_actionPerformed() {
         String Id = idField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/book";
+        String url = "jdbc:mysql://localhost:3306/dbase";
         Connection con = null;
         ResultSet rs = null;
         Statement smt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "123456");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
             //System.out.println(rs.getString("name"));
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
                 con.close();
             } else {
                 //System.out.println(rs.getString("phone"));
-                String sql = "select * from book where id='" + Id + "' ";
+                String sql = "select * from dbase.book where id='" + Id + "' ";
                 smt = con.createStatement();
                 rs = smt.executeQuery(sql);
                 while (rs.next()) {
@@ -121,18 +121,18 @@ public class InquireLibrary extends JFrame implements ActionListener {
     public void delButton_actionPerformed() {
 
         String Id = idField.getText().trim();
-        String url = "jdbc:mysql://localhost:3306/book";
+        String url = "jdbc:mysql://localhost:3306/dbase";
         Connection con = null;
         ResultSet rs = null;
         Statement smt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "123456");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
                 con.close();
             } else {
-                String sssql = "delete  from book where id='" + Id + "' ";
+                String sssql = "delete  from dbase.book where id='" + Id + "' ";
                 smt = con.createStatement();
                 int k = smt.executeUpdate(sssql);
             }

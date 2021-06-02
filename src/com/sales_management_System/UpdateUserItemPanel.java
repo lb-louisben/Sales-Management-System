@@ -89,18 +89,18 @@ public class UpdateUserItemPanel extends JFrame implements ActionListener {
     public void inquireButton_actionPerformed() {
         String userId = idField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/usr_01";
+        String url = "jdbc:mysql://localhost:3306/dbase";
         Connection con = null;
         ResultSet rs = null;
         Statement smt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "123456");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
                 con.close();
             } else {
-                String sql = "select * from usr where id='" + userId + "' ";
+                String sql = "select * from dbase.usr where id='" + userId + "' ";
                 smt = con.createStatement();
                 rs = smt.executeQuery(sql);
                 while (rs.next()) {
@@ -137,13 +137,13 @@ public class UpdateUserItemPanel extends JFrame implements ActionListener {
         //ResultSet rs = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "root");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
                 con.close();
             } else {
-                String upsql = "update buyer set  name = ? , password= ? , age = ? , sex= ? , phone= ? , address= ?   where id = ?";
+                String upsql = "update dbase.usr set  name = ? , password= ? , age = ? , sex= ? , phone= ? , address= ?   where id = ?";
                 ps = con.prepareStatement(upsql);
                 ps.setString(1, userName);
                 ps.setString(2, passWord);
