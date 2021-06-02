@@ -53,7 +53,6 @@ public class Login extends JFrame implements ActionListener {
         loginButton = new JButton("登录");
         registButton = new JButton("注册");
 
-        //内容窗格默认布局管理器是FlowLayout
         this.setLayout(null);
         this.add(nameLabel).setBounds(40, 40, 80, 30);
         this.add(nameField).setBounds(100, 40, 80, 30);
@@ -92,6 +91,7 @@ public class Login extends JFrame implements ActionListener {
                     sta = con.createStatement();
                     rs = sta.executeQuery(sql);
                     String u_name, u_password;
+
                     while (rs.next()) {
                         u_name = rs.getString("name");
                         u_password = rs.getString("password");
