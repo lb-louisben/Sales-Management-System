@@ -19,6 +19,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame implements ActionListener {
+
+
+
     MenuBar menubarxxx = new MenuBar();
 
     Menu menux1 = new Menu("用户管理");
@@ -26,6 +29,8 @@ public class MainFrame extends JFrame implements ActionListener {
     Menu menux3 = new Menu("进货管理");
     Menu menux4 = new Menu("销售管理");
     Menu menux5 = new Menu("帮助");
+    Menu menux6 = new Menu("退出系统");
+
 
     //用户管理
     MenuItem menuitemx101 = new MenuItem("删除用户");
@@ -44,10 +49,10 @@ public class MainFrame extends JFrame implements ActionListener {
     //销售管理
     MenuItem menuitemx401 = new MenuItem("销售管理");
 
-
-    Menu menux6 = new Menu("退出系统");
-    MenuItem menuitem501 = new MenuItem("保存preview");
-    MenuItem menuitem502 = new MenuItem("不存printOUT");
+    //
+    MenuItem menuItem601 = new MenuItem("关于");
+    //
+    MenuItem menuitem501 = new MenuItem("保存并退出");
 
     public MainFrame() {
         super();
@@ -56,17 +61,13 @@ public class MainFrame extends JFrame implements ActionListener {
         menubarxxx.add(menux3);
         menubarxxx.add(menux4);
         menubarxxx.add(menux5);
+        menubarxxx.add(menux6);
 
         //用户管理
         menux1.add(menuitemx101);
         menux1.add(menuitemx102);
         menux1.add(menuitemx103);
         menux1.add(menuitemx104);
-
-        menux1.add(menux6);
-
-        menux6.add(menuitem501);
-        menux6.add(menuitem502);
 
         //库存管理
         menux2.add(menuitemx201);
@@ -79,9 +80,14 @@ public class MainFrame extends JFrame implements ActionListener {
         //销售管理
         menux4.add(menuitemx401);
 
+        //
+        menux5.add(menuItem601);
+
+        //
+        menux6.add(menuitem501);
 
         this.setMenuBar(menubarxxx);
-        menuitem502.addActionListener(this);
+        menuitem501.addActionListener(this);
         //将按钮注册给按钮事件的监听者
         menuitemx101.addActionListener(this);
         menuitemx102.addActionListener(this);
@@ -95,24 +101,19 @@ public class MainFrame extends JFrame implements ActionListener {
         menuitemx302.addActionListener(this);
 
         menuitemx401.addActionListener(this);
-
-        menux3.addActionListener(this);
-        menux4.addActionListener(this);
-
+        menuItem601.addActionListener(this);
     }
 
     public void actionPerformed(ActionEvent e)
     //当按钮按下后的执行方法
     {
-        if (e.getSource() == menuitem502) {
+        if (e.getSource() == menuitem501) {
             System.out.println("成功了！");
             System.exit(0);       //退出当前的销售信息系统
         } else if (e.getSource() == menuitemx101) {                //删除用户
             DeleteUserItemPanel deleteUserItemPanel = new DeleteUserItemPanel();
-
         } else if (e.getSource() == menuitemx102) {                //修改用户
             UpdateUserItemPanel updateUserItemPanel = new UpdateUserItemPanel();
-
         } else if (e.getSource() == menuitemx103) {                //查询用户
             Inquire inquire = new Inquire();
         } else if (e.getSource() == menuitemx104) {                //添加用户
@@ -127,7 +128,8 @@ public class MainFrame extends JFrame implements ActionListener {
             Replenishment replenishment = new Replenishment();
         } else if (e.getSource() == menuitemx401) {                //购买
             Sale sale = new Sale();
+        } else if (e.getSource() == menuItem601) {
+            Help help = new Help();
         }
-
     }
 }
