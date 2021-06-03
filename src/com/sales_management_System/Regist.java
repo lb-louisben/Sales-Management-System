@@ -13,11 +13,12 @@ package com.sales_management_System;
 
 //模块功能：新用户注册
 
+import dbase.Login.DbaseConnect;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 public class Regist extends JFrame implements ActionListener {
@@ -31,14 +32,6 @@ public class Regist extends JFrame implements ActionListener {
         this.setSize(300, 600);
         this.setVisible(true);
         this.setResizable(true);
-		/*this.setDefaultCloseOperation(EXIT_ON_CLOSE);//关闭界面时退出JVM虚拟机
-		addWindowListener(new WindowAdapter(){       //点击关闭界面的叉号时跳出询问窗口
-			  public void windowClosing(WindowEvent e){
-				int n=JOptionPane.showConfirmDialog(null, "Are you sure closing this software?","warning",JOptionPane.YES_NO_OPTION);
-				if(n==JOptionPane.YES_OPTION)
-					System.exit(0);
-			  }
-		 });*/
         init();
     }
 
@@ -82,9 +75,6 @@ public class Regist extends JFrame implements ActionListener {
         this.add(submitButton).setBounds(40, 460, 60, 25);
         this.add(resetButton).setBounds(120, 460, 60, 25);
 
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setVisible(true);
-
         submitButton.addActionListener(this);
         resetButton.addActionListener(this);
     }
@@ -99,35 +89,25 @@ public class Regist extends JFrame implements ActionListener {
         String userPhone = phoneField.getText().trim();
         String userAddress = addressField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/dbase";
 
-        Connection con = null;
-        //ResultSet rs = null;
-        PreparedStatement ps = null;
+        Connection con ;
+        PreparedStatement ps ;
 
         if (userId.equals("") || userName.equals("") || passWord.equals("") || userAge.equals("") || userSex.equals("") || userPhone.equals("") || userAddress.equals("")) {
             JOptionPane.showMessageDialog(this, "请完善登录信息", "warning", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-                if (con == null) {
-                    JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
-                    con.close();
-                } else {
-
-                    String sql = "insert into dbase.usr(id, name, password, age, sex, phone, address) values(?, ?, ?, ?, ?, ?, ?)";
-                    ps = con.prepareStatement(sql);
-                    ps.setString(1, userId);
-                    ps.setString(2, userName);
-                    ps.setString(3, passWord);
-                    ps.setInt(4, Age);
-                    ps.setString(5, userSex);
-                    ps.setString(6, userPhone);
-                    ps.setString(7, userAddress);
-                    ps.executeUpdate();
-
-                }
+                con = DbaseConnect.getConn();
+                String sql = "insert into dbase.usr(id, name, password, age, sex, phone, address) values(?, ?, ?, ?, ?, ?, ?)";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, userId);
+                ps.setString(2, userName);
+                ps.setString(3, passWord);
+                ps.setInt(4, Age);
+                ps.setString(5, userSex);
+                ps.setString(6, userPhone);
+                ps.setString(7, userAddress);
+                ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
