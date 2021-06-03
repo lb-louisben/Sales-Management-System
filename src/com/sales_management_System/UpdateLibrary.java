@@ -11,13 +11,16 @@ package com.sales_management_System;
  * */
 
 
+import dbase.Login.DbaseConnect;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 
 public class UpdateLibrary extends JFrame implements ActionListener {
@@ -74,8 +77,6 @@ public class UpdateLibrary extends JFrame implements ActionListener {
         this.add(inquireButton).setBounds(40, 460, 60, 25);
         this.add(updateButton).setBounds(120, 460, 60, 25);
 
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setVisible(true);
 
         inquireButton.addActionListener(this);
         updateButton.addActionListener(this);
@@ -84,29 +85,21 @@ public class UpdateLibrary extends JFrame implements ActionListener {
     public void inquireButton_actionPerformed() {
         String Id = idField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/dbase";
-        Connection con = null;
-        ResultSet rs = null;
-        Statement smt = null;
+        Connection con;
+        ResultSet rs;
+        Statement smt;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-            if (con == null) {
-                JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
-                con.close();
-            } else {
-                String sql = "select * from dbase.book where id='" + Id + "' ";
-                smt = con.createStatement();
-                rs = smt.executeQuery(sql);
-                while (rs.next()) {
-                    idField.setText(rs.getString("id"));
-                    nameField.setText(rs.getString("name"));
-                    libraryField.setText(String.valueOf(rs.getInt("library")));
-                    priceField.setText(rs.getString("price"));
-                    saleField.setText(rs.getString("sale"));
-                }
+            con = DbaseConnect.getConn();
+            String sql = "select * from dbase.book where id='" + Id + "' ";
+            smt = con.createStatement();
+            rs = smt.executeQuery(sql);
+            while (rs.next()) {
+                idField.setText(rs.getString("id"));
+                nameField.setText(rs.getString("name"));
+                libraryField.setText(String.valueOf(rs.getInt("library")));
+                priceField.setText(rs.getString("price"));
+                saleField.setText(rs.getString("sale"));
             }
-
             con.close();
             smt.close();
             rs.close();
@@ -127,32 +120,24 @@ public class UpdateLibrary extends JFrame implements ActionListener {
         String Sale = saleField.getText().trim();
         int sale = Integer.parseInt(Sale);
 
-        String url = "jdbc:mysql://localhost:3306/dbase";
-        Connection con = null;
-        PreparedStatement ps = null;
-        //ResultSet rs = null;
+        Connection con;
+        PreparedStatement ps;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-            if (con == null) {
-                JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
-                con.close();
-            } else {
-                String sql = "update dbase.book set name= ? , library= ? , price= ? , sale= ? where id = ?";
-                ps = con.prepareStatement(sql);
-                ps.setString(1, Name);
-                ps.setInt(2, library);
-                ps.setBigDecimal(3, price);
-                ps.setInt(4, sale);
-                ps.setString(5, Id);
+            con = DbaseConnect.getConn();
+            String sql = "update dbase.book set name= ? , library= ? , price= ? , sale= ? where id = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, Name);
+            ps.setInt(2, library);
+            ps.setBigDecimal(3, price);
+            ps.setInt(4, sale);
+            ps.setString(5, Id);
                 ps.executeUpdate();
 
-                ps.executeUpdate();    //查询book的表结构
+            ps.executeUpdate();
 
                 con.close();
                 ps.close();
-            }
         } catch (Exception e) {
         }
     }
