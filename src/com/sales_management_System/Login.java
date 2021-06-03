@@ -104,7 +104,7 @@ public class Login extends JFrame implements ActionListener {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
             } finally {
-                if (!flag) {
+                if (flag == true) {
 //                    System.out.println("查到数据了！");
                     this.setVisible(false);
                     Icon picture1 = new ImageIcon("src/pic.jpg");
