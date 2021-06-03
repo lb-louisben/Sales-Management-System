@@ -11,10 +11,15 @@ package com.sales_management_System;
  * */
 
 
+import dbase.Login.DbaseConnect;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 
 public class UpdateUserItemPanel extends JFrame implements ActionListener {
@@ -28,14 +33,6 @@ public class UpdateUserItemPanel extends JFrame implements ActionListener {
         this.setTitle("修改和完善用户信息");
         this.setVisible(true);
         this.setResizable(true);
-		/*this.setDefaultCloseOperation(EXIT_ON_CLOSE);//关闭界面时退出JVM虚拟机
-		addWindowListener(new WindowAdapter(){       //点击关闭界面的叉号时跳出询问窗口
-			  public void windowClosing(WindowEvent e){
-				int n=JOptionPane.showConfirmDialog(null, "Are you sure closing this software?","warning",JOptionPane.YES_NO_OPTION);
-				if(n==JOptionPane.YES_OPTION)
-					System.exit(0);
-			  }
-		 });*/
         init();
     }
 
@@ -79,8 +76,6 @@ public class UpdateUserItemPanel extends JFrame implements ActionListener {
         this.add(inquireButton).setBounds(40, 460, 60, 25);
         this.add(updateButton).setBounds(120, 460, 60, 25);
 
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setVisible(true);
 
         inquireButton.addActionListener(this);
         updateButton.addActionListener(this);
@@ -89,28 +84,21 @@ public class UpdateUserItemPanel extends JFrame implements ActionListener {
     public void inquireButton_actionPerformed() {
         String userId = idField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/dbase";
-        Connection con = null;
-        ResultSet rs = null;
-        Statement smt = null;
+        Connection con;
+        Statement smt;
+        ResultSet rs;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-            if (con == null) {
-                JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
-                con.close();
-            } else {
-                String sql = "select * from dbase.usr where id='" + userId + "' ";
-                smt = con.createStatement();
-                rs = smt.executeQuery(sql);
-                while (rs.next()) {
-                    nameField.setText(rs.getString("name"));
-                    passwordField.setText(rs.getString("password"));
-                    ageField.setText(String.valueOf(rs.getInt("age")));
-                    sexField.setText(rs.getString("sex"));
-                    phoneField.setText(rs.getString("phone"));
-                    addressField.setText(rs.getString("address"));
-                }
+            con = DbaseConnect.getConn();
+            String sql = "select * from dbase.usr where id='" + userId + "' ";
+            smt = con.createStatement();
+            rs = smt.executeQuery(sql);
+            while (rs.next()) {
+                nameField.setText(rs.getString("name"));
+                passwordField.setText(rs.getString("password"));
+                ageField.setText(String.valueOf(rs.getInt("age")));
+                sexField.setText(rs.getString("sex"));
+                phoneField.setText(rs.getString("phone"));
+                addressField.setText(rs.getString("address"));
             }
             con.close();
             smt.close();
@@ -131,33 +119,23 @@ public class UpdateUserItemPanel extends JFrame implements ActionListener {
         String userSex = sexField.getText().trim();
         String userPhone = phoneField.getText().trim();
         String userAddress = addressField.getText().trim();
-        String url = "jdbc:mysql://localhost:3306/dbase";
-        Connection con = null;
-        PreparedStatement ps = null;
-        //ResultSet rs = null;
+        Connection con;
+        PreparedStatement ps;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-            if (con == null) {
-                JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
-                con.close();
-            } else {
-                String upsql = "update dbase.usr set  name = ? , password= ? , age = ? , sex= ? , phone= ? , address= ?   where id = ?";
-                ps = con.prepareStatement(upsql);
-                ps.setString(1, userName);
-                ps.setString(2, passWord);
-                ps.setInt(3, Age);
-                ps.setString(4, userSex);
-                ps.setString(5, userPhone);
-                ps.setString(6, userAddress);
-                ps.setString(7, userId);
-
-                ps.executeUpdate();
-
-                con.close();
-                ps.close();
-            }
+            con = DbaseConnect.getConn();
+            String upsql = "update dbase.usr set  name = ? , password= ? , age = ? , sex= ? , phone= ? , address= ?   where id = ?";
+            ps = con.prepareStatement(upsql);
+            ps.setString(1, userName);
+            ps.setString(2, passWord);
+            ps.setInt(3, Age);
+            ps.setString(4, userSex);
+            ps.setString(5, userPhone);
+            ps.setString(6, userAddress);
+            ps.setString(7, userId);
+            ps.executeUpdate();
+            con.close();
+            ps.close();
         } catch (Exception e) {
         }
     }
