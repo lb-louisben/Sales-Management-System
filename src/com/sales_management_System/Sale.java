@@ -11,10 +11,15 @@ package com.sales_management_System;
  * */
 
 
+import dbase.Login.DbaseConnect;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 
 public class Sale extends JFrame implements ActionListener {
@@ -76,32 +81,20 @@ public class Sale extends JFrame implements ActionListener {
     public void indexButton_actionPerformed() {
         String Id = idField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/dbase";
-        Connection con = null;
-        ResultSet rs = null;
-        Statement smt = null;
+        Connection con;
+        ResultSet rs;
+        Statement smt;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-            //System.out.println(rs.getString("name"));
-            if (con == null) {
-                JOptionPane.showMessageDialog(this, "数据库连接错误", "warning", JOptionPane.WARNING_MESSAGE);
-                con.close();
-            } else {
-                //System.out.println(rs.getString("phone"));
-                String sql = "select * from dbase.book where id= '" + Id + "' ";
-                smt = con.createStatement();
-                rs = smt.executeQuery(sql);
-                while (rs.next()) {
-                    nameField.setText(rs.getString("name"));
-                    libraryField.setText(rs.getString("library"));
-                    libraryField.setText(String.valueOf(rs.getInt("library")));
-                    priceField.setText(String.valueOf(rs.getBigDecimal("price")));
-
-                }
-
+            con = DbaseConnect.getConn();
+            String sql = "select * from dbase.book where id= '" + Id + "' ";
+            smt = con.createStatement();
+            rs = smt.executeQuery(sql);
+            while (rs.next()) {
+                nameField.setText(rs.getString("name"));
+                libraryField.setText(rs.getString("library"));
+                libraryField.setText(String.valueOf(rs.getInt("library")));
+                priceField.setText(String.valueOf(rs.getBigDecimal("price")));
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "数据库连接错误", "warning", JOptionPane.WARNING_MESSAGE);
@@ -112,39 +105,21 @@ public class Sale extends JFrame implements ActionListener {
         String Id = idField.getText().trim();
         String num = numField.getText().trim();
         int number = Integer.parseInt(num);
-        //String name=nameField.getText().trim();
-        //String library=libraryField.getText().trim();
-        //int surplus=Integer.parseInt(library);
-        String url = "jdbc:mysql://localhost:3306/dbase";
 
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Statement sta = null;
+        Connection con;
+        PreparedStatement ps;
 
         if (Id.equals("") || num.equals("")) {
             JOptionPane.showMessageDialog(this, "连接错误", "warning", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-                if (con == null) {
-                    JOptionPane.showMessageDialog(this, "库连接错误", "warning", JOptionPane.WARNING_MESSAGE);
-                    con.close();
-                } else {
-
-                    //String sql1="select library from book where id='"+Id+"'";
-                    String sql2 = "update dbase.book set  library = library - ? , sale = sale + ? where id=?";
-                    ps = con.prepareStatement(sql2);
-
-                    //System.out.println(a);
-                    //ps.setInt(1, surplus);
-                    ps.setInt(1, number);
-                    ps.setInt(2, number);
-                    ps.setString(3, Id);
-                    ps.executeUpdate();
-
-                }
+                con = DbaseConnect.getConn();
+                String sql2 = "update dbase.book set  library = library - ? , sale = sale + ? where id=?";
+                ps = con.prepareStatement(sql2);
+                ps.setInt(1, number);
+                ps.setInt(2, number);
+                ps.setString(3, Id);
+                ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "数据库连接错误", "warning", JOptionPane.WARNING_MESSAGE);
