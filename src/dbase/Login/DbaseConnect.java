@@ -7,12 +7,13 @@ import java.sql.SQLException;
 /*-
  * @program: Sales-Management-System
  *
- * @description: just connect with mysql
+ * @description: connect with mysql
  *
  * @author: LOUIS
  *
  * @creat: 2021-06-02-15:26
  * */
+
 public class DbaseConnect {
     //    public static Connection conn;
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
