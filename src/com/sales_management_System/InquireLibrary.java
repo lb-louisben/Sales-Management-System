@@ -11,11 +11,12 @@ package com.sales_management_System;
  * */
 
 
+import dbase.Login.DbaseConnect;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -84,31 +85,21 @@ public class InquireLibrary extends JFrame implements ActionListener {
         String Id = idField.getText().trim();
 
         String url = "jdbc:mysql://localhost:3306/dbase";
-        Connection con = null;
-        ResultSet rs = null;
-        Statement smt = null;
+        Connection con ;
+        ResultSet rs ;
+        Statement smt ;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-            //System.out.println(rs.getString("name"));
-            if (con == null) {
-                JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
-                con.close();
-            } else {
-                //System.out.println(rs.getString("phone"));
-                String sql = "select * from dbase.book where id='" + Id + "' ";
-                smt = con.createStatement();
-                rs = smt.executeQuery(sql);
-                while (rs.next()) {
-                    nameField.setText(rs.getString("name"));
-                    libraryField.setText(rs.getString("library"));
-                    priceField.setText(String.valueOf(rs.getInt("price")));
-                    saleField.setText(rs.getString("sale"));
-                }
-                //System.out.println(rs.getString("name"));
-                //System.out.println(rs.getString("age"));
-                //System.out.println(rs.getString("phone"));
+            con = DbaseConnect.getConn();
+            String sql = "select * from dbase.book where id='" + Id + "' ";
+            smt = con.createStatement();
+            rs = smt.executeQuery(sql);
+            while (rs.next()) {
+                nameField.setText(rs.getString("name"));
+                libraryField.setText(rs.getString("library"));
+                priceField.setText(String.valueOf(rs.getInt("price")));
+                saleField.setText(rs.getString("sale"));
             }
+
             con.close();
             smt.close();
             rs.close();
@@ -121,21 +112,14 @@ public class InquireLibrary extends JFrame implements ActionListener {
     public void delButton_actionPerformed() {
 
         String Id = idField.getText().trim();
-        String url = "jdbc:mysql://localhost:3306/dbase";
-        Connection con = null;
-        ResultSet rs = null;
-        Statement smt = null;
+        Connection con ;
+        Statement smt;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-            if (con == null) {
-                JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
-                con.close();
-            } else {
-                String sssql = "delete  from dbase.book where id='" + Id + "' ";
-                smt = con.createStatement();
-                int k = smt.executeUpdate(sssql);
-            }
+            con = DbaseConnect.getConn();
+
+            String sssql = "delete  from dbase.book where id='" + Id + "' ";
+            smt = con.createStatement();
+            int k = smt.executeUpdate(sssql);
         } catch (Exception e) {
         }
     }
