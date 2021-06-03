@@ -19,14 +19,12 @@ public class DbaseConnect {
     static final String DB_URL = "jdbc:mysql://localhost:3306/dbase";//这里是连接User数据库哦
     static final String USER = "root";//用户
     static final String PASSWORD = "Hwb..//0987";//密码
-//    public static Connection conn;
 
     public static Connection getConn() {
         Connection conn;
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-            System.out.println("Successfully!!!!");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             return null;
