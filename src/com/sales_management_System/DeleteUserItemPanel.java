@@ -11,11 +11,12 @@
 
 package com.sales_management_System;
 
+import dbase.Login.DbaseConnect;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -31,15 +32,6 @@ public class DeleteUserItemPanel extends JFrame implements ActionListener {
         this.setTitle("删除非法用户");
         this.setVisible(true);
         this.setResizable(true);
-		/*
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);//关闭界面时退出JVM虚拟机
-		addWindowListener(new WindowAdapter(){       //点击关闭界面的叉号时跳出询问窗口
-			  public void windowClosing(WindowEvent e){
-				int n=JOptionPane.showConfirmDialog(null, "Are you sure closing this software?","warning",JOptionPane.YES_NO_OPTION);
-				if(n==JOptionPane.YES_OPTION)
-					System.exit(0);
-			  }
-		 });*/
         init();
     }
 
@@ -93,34 +85,23 @@ public class DeleteUserItemPanel extends JFrame implements ActionListener {
     public void indexButton_actionPerformed() {
         String userId = idField.getText().trim();
 
-        String url = "jdbc:mysql://localhost:3306/dbase";
         Connection con = null;
         ResultSet rs = null;
         Statement smt = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-            //System.out.println(rs.getString("name"));
-            if (con == null) {
-                JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
-                con.close();
-            } else {
-                //System.out.println(rs.getString("phone"));
-                String sql = "select * from dbase.usr where id='" + userId + "' ";
-                smt = con.createStatement();
-                rs = smt.executeQuery(sql);
-                while (rs.next()) {
-                    nameField.setText(rs.getString("name"));
-                    passwordField.setText(rs.getString("password"));
-                    ageField.setText(String.valueOf(rs.getInt("age")));
-                    sexField.setText(rs.getString("sex"));
-                    phoneField.setText(rs.getString("phone"));
-                    addressField.setText(rs.getString("address"));
+            con = DbaseConnect.getConn();
+
+            String sql = "select * from dbase.usr where id='" + userId + "' ";
+            smt = con.createStatement();
+            rs = smt.executeQuery(sql);
+            while (rs.next()) {
+                nameField.setText(rs.getString("name"));
+                passwordField.setText(rs.getString("password"));
+                ageField.setText(String.valueOf(rs.getInt("age")));
+                sexField.setText(rs.getString("sex"));
+                phoneField.setText(rs.getString("phone"));
+                addressField.setText(rs.getString("address"));
                 }
-                //System.out.println(rs.getString("name"));
-                //System.out.println(rs.getString("age"));
-                //System.out.println(rs.getString("phone"));
-            }
             con.close();
             smt.close();
             rs.close();
@@ -133,21 +114,14 @@ public class DeleteUserItemPanel extends JFrame implements ActionListener {
     public void delButton_actionPerformed() {
 
         String userId = idField.getText().trim();
-        String url = "jdbc:mysql://localhost:3306/dbase";
         Connection con = null;
         ResultSet rs = null;
         Statement smt = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "Hwb..//0987");
-            if (con == null) {
-                JOptionPane.showMessageDialog(this, "数据连接出错，请稍后重试", "warning", JOptionPane.WARNING_MESSAGE);
-                con.close();
-            } else {
-                String sssql = "delete  from dbase.usr where id='" + userId + "' ";
-                smt = con.createStatement();
-                int k = smt.executeUpdate(sssql);
-            }
+            con = DbaseConnect.getConn();
+            String sssql = "delete  from dbase.usr where id='" + userId + "' ";
+            smt = con.createStatement();
+            int k = smt.executeUpdate(sssql);
         } catch (Exception e) {
         }
     }
