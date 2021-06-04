@@ -17,7 +17,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -33,14 +32,6 @@ public class Inquire extends JFrame implements ActionListener {
         this.setTitle("查询用户");
         this.setVisible(true);
         this.setResizable(true);
-		/*this.setDefaultCloseOperation(EXIT_ON_CLOSE);//关闭界面时退出JVM虚拟机
-		addWindowListener(new WindowAdapter(){       //点击关闭界面的叉号时跳出询问窗口
-			  public void windowClosing(WindowEvent e){
-				int n=JOptionPane.showConfirmDialog(null, "Are you sure closing this software?","warning",JOptionPane.YES_NO_OPTION);
-				if(n==JOptionPane.YES_OPTION)
-					System.exit(0);
-			  }
-		 });*/
         init();
     }
 
@@ -136,6 +127,7 @@ public class Inquire extends JFrame implements ActionListener {
             indexButton_actionPerformed();
         } else if (e.getSource() == delButton) {
             delButton_actionPerformed();
+            JOptionPane.showMessageDialog(null, "删除成功");
         }
     }
 }
