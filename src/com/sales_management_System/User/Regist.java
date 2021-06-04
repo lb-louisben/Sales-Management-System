@@ -1,4 +1,4 @@
-package com.sales_management_System;
+package com.sales_management_System.User;
 
 /*-
  * @program: Sales-Management-System
