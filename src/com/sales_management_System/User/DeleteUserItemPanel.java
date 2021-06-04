@@ -2,14 +2,14 @@
 /*-
  * @program: Sales-Management-System
  *
- * @description: com.sales_management_System.DeleteUserItemPanel
+ * @description: com.sales_management_System.User.DeleteUserItemPanel
  *
  * @author: LOUIS
  *
  * @creat: 2021-05-28-20:27
  * */
 
-package com.sales_management_System;
+package com.sales_management_System.User;
 
 import dbase.Login.DbaseConnect;
 
