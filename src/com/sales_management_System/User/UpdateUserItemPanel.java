@@ -143,6 +143,7 @@ public class UpdateUserItemPanel extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == inquireButton) {
             inquireButton_actionPerformed();
+            JOptionPane.showMessageDialog(null, "查到了！");
         } else if (e.getSource() == updateButton) {
             updateButton_actionPerformed();
             JOptionPane.showMessageDialog(null, "修改成功");
