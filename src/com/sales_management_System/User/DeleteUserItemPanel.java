@@ -75,7 +75,6 @@ public class DeleteUserItemPanel extends JFrame implements ActionListener {
         this.add(indexButton).setBounds(40, 460, 60, 25);
         this.add(delButton).setBounds(120, 460, 60, 25);
 
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 
         indexButton.addActionListener(this);
@@ -88,10 +87,11 @@ public class DeleteUserItemPanel extends JFrame implements ActionListener {
         Connection con = null;
         ResultSet rs = null;
         Statement smt = null;
-        try {
-            con = DbaseConnect.getConn();
 
+        con = DbaseConnect.getConn();
+        try {
             String sql = "select * from dbase.usr where id='" + userId + "' ";
+
             smt = con.createStatement();
             rs = smt.executeQuery(sql);
             while (rs.next()) {
@@ -114,23 +114,25 @@ public class DeleteUserItemPanel extends JFrame implements ActionListener {
     public void delButton_actionPerformed() {
 
         String userId = idField.getText().trim();
-        Connection con = null;
-        ResultSet rs = null;
-        Statement smt = null;
+        Connection con;
+        Statement smt;
         try {
             con = DbaseConnect.getConn();
             String sssql = "delete  from dbase.usr where id='" + userId + "' ";
             smt = con.createStatement();
             int k = smt.executeUpdate(sssql);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == indexButton) {
             indexButton_actionPerformed();
+            JOptionPane.showMessageDialog(null, "查到了");
         } else if (e.getSource() == delButton) {
             delButton_actionPerformed();
+            JOptionPane.showMessageDialog(null, "删除成功");
         }
     }
 }
