@@ -71,7 +71,6 @@ public class Sale extends JFrame implements ActionListener {
         this.add(indexButton).setBounds(40, 460, 60, 25);
         this.add(submitButton).setBounds(120, 460, 60, 25);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 
         indexButton.addActionListener(this);
