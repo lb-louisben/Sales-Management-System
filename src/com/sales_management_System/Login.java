@@ -12,6 +12,7 @@ package com.sales_management_System;
 
 //模块功能：1.登陆界面，处理登陆信息; 2.注册页面，新用户注册
 
+import com.sales_management_System.User.Regist;
 import dbase.Login.DbaseConnect;
 
 import javax.swing.*;
