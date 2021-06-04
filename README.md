@@ -1,5 +1,4 @@
 # Sales-Management-System
-
 ## wahaha饮料🥤销售管理系统
 
 ## 制作者基本信息：
@@ -12,7 +11,7 @@
 ## 环境依赖：
 
 - 软件运行系统：MacOS、Windows系统
-- ：IntelliJ IDEA
+- 开发环境：IntelliJ IDEA 2021.1
 - Java语言及相应的开发环境：
 
   java version "14.0.1" 2020-04-14 Java(TM) SE  
@@ -20,6 +19,8 @@
 
   Java HotSpot(TM) 64-Bit Server VM (build 14.0.1+7, mixed mode, sharing)
 - JDK 8.0 MySQL等。
+
+- git, github
 
 ## 项目结构
 
