@@ -1,4 +1,5 @@
 # Sales-Management-System
+#### [github链接🔗](https://github.com/lb-louisben/Sales-Management-System)
 ## wahaha饮料🥤销售管理系统
 
 ## 制作者基本信息：
@@ -83,3 +84,5 @@
 ```
 
 
+
+[]: https://github.com/lb-louisben/Sales-Management-System
