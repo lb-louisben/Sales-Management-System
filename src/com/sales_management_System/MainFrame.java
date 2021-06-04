@@ -13,6 +13,12 @@ package com.sales_management_System;
 
 //模块功能：登录成功以后，显示整个系统的主界面（此为最重要界面）
 
+import com.sales_management_System.Products.*;
+import com.sales_management_System.User.DeleteUserItemPanel;
+import com.sales_management_System.User.Inquire;
+import com.sales_management_System.User.Regist;
+import com.sales_management_System.User.UpdateUserItemPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
